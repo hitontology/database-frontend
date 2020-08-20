@@ -12,15 +12,16 @@ class SoftwareproductView(ModelView):
     label_columns = {'label':'Name', 'comment':'Comment'}
     list_columns = ['label', 'comment', 'coderepository', 'homepage']
 
-class CatalogueView(ModelView):
-    datamodel = SQLAInterface(Catalogue)
-    label_columns = {'label':'Name', }
-    list_columns = ['suffix', 'label', 'type']
-
 class ClassifiedView(ModelView):
     datamodel = SQLAInterface(Classified)
     label_columns = {'label':'Name', }
     list_columns = ['label', 'suffix', 'catalogue_suffix']
+
+class CatalogueView(ModelView):
+    datamodel = SQLAInterface(Catalogue)
+    label_columns = {'label':'Name', }
+    list_columns = ['suffix', 'label', 'type']
+    related_views = [ClassifiedView]
 
 """
     Create your Model based REST API::
@@ -65,7 +66,7 @@ def page_not_found(e):
     )
 
 
-db.create_all()
+#db.create_all()
 
 appbuilder.add_view(
     SoftwareproductView,
