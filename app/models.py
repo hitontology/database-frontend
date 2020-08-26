@@ -1,6 +1,25 @@
-from flask_appbuilder import Model
-from sqlalchemy import Column, Integer, String, ForeignKey, Table
+import enum
+from flask_appbuilder import Model, Base
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, Enum, ARRAY
 from sqlalchemy.orm import relationship
+import config
+from sqlalchemy import create_engine
+
+engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
+
+class Interoperabilitystandard(Base):
+	__table__ = Table('interoperabilitystandard', Base.metadata,autoload=True,autoload_with=engine)
+	def __repr__(self):
+		return self.label
+
+association_table = Table('swp_has_interoperabilitystandard', Base.metadata,
+	Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix')),
+	Column('io_suffix', String(200), ForeignKey('interoperabilitystandard.suffix'))
+	)
+
+#class SwpHasInteroperabilitystandard(Model):
+#	swp_suffix = Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
+#	io_suffix = Column('io_suffix', String(200), ForeignKey('interoperabilitystandard.suffix'),primary_key=True)
 
 class SwpHasChild(Model):
 	parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
@@ -13,7 +32,7 @@ class Softwareproduct(Model):
     coderepository = Column(String(200), nullable=True)
     homepage = Column(String(200), nullable=True)
     swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
- #   clients = Column()
+    swp_has_interoperabilitystandard = relationship('Interoperabilitystandard', secondary = association_table)
 
     def __repr__(self):
         return self.label
