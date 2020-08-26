@@ -12,14 +12,25 @@ class Interoperabilitystandard(Base):
 	def __repr__(self):
 		return self.label
 
-association_table = Table('swp_has_interoperabilitystandard', Base.metadata,
+associativeData = [
+    ["language","lang"],
+    ["license","license"],
+    ["operatingsystem","os"],
+    ["programminglanguage","plang"],
+    #["programminglibrary","lib"],
+    ["interoperabilitystandard","io"],
+    ]
+
+associativeTables = map(lambda d: Table('swp_has_'+d[0], Base.metadata,
+	Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix')),
+	Column(d[1]+'_suffix', String(200), ForeignKey(d[0]+'.suffix'))
+	),
+        associativeData)
+
+swp_has_interoperabilitystandard = Table('swp_has_interoperabilitystandard', Base.metadata,
 	Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix')),
 	Column('io_suffix', String(200), ForeignKey('interoperabilitystandard.suffix'))
 	)
-
-#class SwpHasInteroperabilitystandard(Model):
-#	swp_suffix = Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
-#	io_suffix = Column('io_suffix', String(200), ForeignKey('interoperabilitystandard.suffix'),primary_key=True)
 
 class SwpHasChild(Model):
 	parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
@@ -32,7 +43,7 @@ class Softwareproduct(Model):
     coderepository = Column(String(200), nullable=True)
     homepage = Column(String(200), nullable=True)
     swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
-    swp_has_interoperabilitystandard = relationship('Interoperabilitystandard', secondary = association_table)
+    swp_has_interoperabilitystandard = relationship('Interoperabilitystandard', secondary = swp_has_interoperabilitystandard)
 
     def __repr__(self):
         return self.label

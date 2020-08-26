@@ -3,7 +3,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
 
 from . import appbuilder, db
-from .models import Softwareproduct, Catalogue, Classified
+from .models import Softwareproduct, Catalogue, Classified, Interoperabilitystandard
 
 
 
@@ -22,6 +22,12 @@ class CatalogueView(ModelView):
     label_columns = {'label':'Name', }
     list_columns = ['suffix', 'label', 'type']
     related_views = [ClassifiedView]
+
+class InteroperabilitystandardView(ModelView):
+    datamodel = SQLAInterface(Interoperabilitystandard)
+    label_columns = {'label':'Name'}
+    list_columns = ['suffix', 'label', 'comment']#, 'sourceuris']
+#    related_views = [SoftwareproductView]
 
 """
     Create your Model based REST API::
@@ -87,6 +93,14 @@ appbuilder.add_view(
 appbuilder.add_view(
     ClassifiedView,
     "Classified",
+    icon = "fa-folder-open-o",
+    category = "Software Product",
+    category_icon = "fa-envelope"
+)
+
+appbuilder.add_view(
+    InteroperabilitystandardView,
+    "Interoperability Standard",
     icon = "fa-folder-open-o",
     category = "Software Product",
     category_icon = "fa-envelope"
