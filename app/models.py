@@ -7,30 +7,31 @@ from sqlalchemy import create_engine
 
 engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
 
-class Interoperabilitystandard(Base):
-	__table__ = Table('interoperabilitystandard', Base.metadata,autoload=True,autoload_with=engine)
-	def __repr__(self):
-		return self.label
-
 associativeData = [
     ["language","lang"],
     ["license","license"],
     ["operatingsystem","os"],
     ["programminglanguage","plang"],
-    #["programminglibrary","lib"],
+    ["programminglibrary","lib"],
     ["interoperabilitystandard","io"],
     ]
 
-associativeTables = map(lambda d: Table('swp_has_'+d[0], Base.metadata,
+def repr(self):
+        return self.label
+
+clazzes = []
+for data in associativeData:
+   clazzes.append(type(data[0], (Base, ),
+   {
+	"__table__": Table(data[0], Base.metadata,autoload=True,autoload_with=engine),
+        "__repr__": repr
+   }))
+
+associativeTables = list(map(lambda d: Table('swp_has_'+d[0], Base.metadata,
 	Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix')),
 	Column(d[1]+'_suffix', String(200), ForeignKey(d[0]+'.suffix'))
 	),
-        associativeData)
-
-swp_has_interoperabilitystandard = Table('swp_has_interoperabilitystandard', Base.metadata,
-	Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix')),
-	Column('io_suffix', String(200), ForeignKey('interoperabilitystandard.suffix'))
-	)
+        associativeData))
 
 class SwpHasChild(Model):
 	parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
@@ -43,10 +44,13 @@ class Softwareproduct(Model):
     coderepository = Column(String(200), nullable=True)
     homepage = Column(String(200), nullable=True)
     swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
-    swp_has_interoperabilitystandard = relationship('Interoperabilitystandard', secondary = swp_has_interoperabilitystandard)
 
     def __repr__(self):
         return self.label
+
+for i in range(len(associativeData)):
+    rel = relationship(associativeData[i][0], secondary = associativeTables[i])
+    setattr(Softwareproduct,"swp_has_"+associativeData[i][0],rel)
 
 class Catalogue(Model):
     suffix = Column(String(200), primary_key=True)

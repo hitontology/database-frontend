@@ -3,7 +3,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
 
 from . import appbuilder, db
-from .models import Softwareproduct, Catalogue, Classified, Interoperabilitystandard
+from .models import Softwareproduct, Catalogue, Classified#, interoperabilitystandard
 
 
 
@@ -23,10 +23,10 @@ class CatalogueView(ModelView):
     list_columns = ['suffix', 'label', 'type']
     related_views = [ClassifiedView]
 
-class InteroperabilitystandardView(ModelView):
-    datamodel = SQLAInterface(Interoperabilitystandard)
-    label_columns = {'label':'Name'}
-    list_columns = ['suffix', 'label', 'comment']#, 'sourceuris']
+#class InteroperabilitystandardView(ModelView):
+#    datamodel = SQLAInterface(interoperabilitystandard)
+#    label_columns = {'label':'Name'}
+#    list_columns = ['suffix', 'label', 'comment']#, 'sourceuris']
 #    related_views = [SoftwareproductView]
 
 """
@@ -98,10 +98,10 @@ appbuilder.add_view(
     category_icon = "fa-envelope"
 )
 
-appbuilder.add_view(
-    InteroperabilitystandardView,
-    "Interoperability Standard",
-    icon = "fa-folder-open-o",
-    category = "Software Product",
-    category_icon = "fa-envelope"
-)
+#appbuilder.add_view(
+#    InteroperabilitystandardView,
+#    "Interoperability Standard",
+#    icon = "fa-folder-open-o",
+#    category = "Software Product",
+#    category_icon = "fa-envelope"
+#)
