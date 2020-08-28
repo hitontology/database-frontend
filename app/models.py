@@ -59,7 +59,7 @@ for i in range(len(associativeData)):
 class Catalogue(Model):
     suffix = Column(String(200), primary_key=True)
     label =  Column(String(200), nullable=False)
-    type =  Column(String(200), nullable=False)
+    type =  Column(Enum("UserGroup","ApplicationSystem","Feature","EnterpriseFunction","OrganizationalUnit"), nullable=False)
 
     def __repr__(self):
         return self.label
