@@ -1,7 +1,7 @@
 import enum
 from flask_appbuilder import Model, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Enum, ARRAY
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 import config
 from sqlalchemy import create_engine
 
@@ -44,6 +44,10 @@ class Softwareproduct(Model):
     coderepository = Column(String(200), nullable=True)
     homepage = Column(String(200), nullable=True)
     swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
+
+    @validates('comment', 'coderepository', 'homepage')
+    def empty_string_to_null(self, key, value):
+        return None if value=="" else value
 
     def __repr__(self):
         return self.label
