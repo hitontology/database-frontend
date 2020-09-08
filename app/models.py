@@ -1,4 +1,3 @@
-import enum
 from flask_appbuilder import Model, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Enum, ARRAY
 from sqlalchemy.orm import relationship, validates
@@ -34,8 +33,10 @@ associativeTables = list(map(lambda d: Table('swp_has_'+d[0], Base.metadata,
         associativeData))
 
 class SwpHasChild(Model):
-	parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
-	child_suffix = Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
+    parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
+    child_suffix = Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
+#    def __repr__(self):
+#        return .label
 
 class Softwareproduct(Model):
     suffix = Column(String(200), primary_key=True)
@@ -43,6 +44,10 @@ class Softwareproduct(Model):
     comment = Column(String, nullable=True)
     coderepository = Column(String(200), nullable=True)
     homepage = Column(String(200), nullable=True)
+    #databasesystems =  Column(ArrayOfEnum(Enum("MySql","PostgreSql")))
+    #databasesystems = Column(Enum("MySql","PostgreSql"))
+#    databasesystems =  Column(ArrayOfEnum(Enum("MySql","PostgreSql")))
+#    clients =  Column(ARRAY(Enum("Mobile","WebBased","Native")), nullable=False)
     swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
 
     @validates('comment', 'coderepository', 'homepage')
@@ -71,16 +76,19 @@ class Classified(Model):
     label =  Column(String(200), nullable=False)
     comment = Column(String, nullable=True)
     dct_source = Column(String(200), nullable=True)
-    # synonyms = Column()
+    synonyms = Column(ARRAY(String(200)))
 
     def __repr__(self):
         return self.label
 
-"""
+class Citation(Model):
+    suffix = Column(String(200), primary_key=True)
+    swp_suffix = Column(String(200), ForeignKey("softwareproduct.suffix"),nullable=False)
+    softwareproduct = relationship("Softwareproduct")
+    #classified_suffix = Column(String(200), ForeignKey("classified.suffix"))
+    #classified = relationship("Classified" )
+    label =  Column(String(200), nullable=False)
 
-You can use the extra Flask-AppBuilder fields and Mixin's
+    def __repr__(self):
+        return self.label
 
-AuditMixin will add automatic timestamp of created and modified by who
-
-
-"""

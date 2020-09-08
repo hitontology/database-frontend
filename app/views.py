@@ -1,27 +1,39 @@
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
+from wtforms import StringField, FieldList
 
 from . import appbuilder, db
-from .models import Softwareproduct, Catalogue, Classified#, interoperabilitystandard
-
-
+from .models import Softwareproduct, Catalogue, Classified, Citation#, interoperabilitystandard
 
 class SoftwareproductView(ModelView):
     datamodel = SQLAInterface(Softwareproduct)
-    label_columns = {'label':'Name', 'comment':'Comment'}
-    list_columns = ['label', 'comment', 'coderepository', 'homepage']
+    edit_columns = ['suffix','label', 'comment', 'coderepository', 'homepage']
+    label_columns = {'label':'Name', 'comment':'Comment', "uri": "URI"}
+    list_columns = ['suffix',"uri", 'label', 'comment', 'coderepository', 'homepage']
 
 class ClassifiedView(ModelView):
     datamodel = SQLAInterface(Classified)
+    edit_columns= ["suffix","synonyms"]
     label_columns = {'label':'Name', }
     list_columns = ['label', 'suffix', 'catalogue_suffix']
+    search_exclude_columns = ['synonyms']
+    add_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=0)}
+    edit_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=0)}
 
 class CatalogueView(ModelView):
     datamodel = SQLAInterface(Catalogue)
+    edit_columns= ["suffix"]
     label_columns = {'label':'Name', }
     list_columns = ['suffix', 'label', 'type']
     related_views = [ClassifiedView]
+
+class CitationView(ModelView):
+    datamodel = SQLAInterface(Citation)
+    edit_columns= ["suffix"]
+    label_columns = {'label':'Citation', 'suffix': 'id'}
+    list_columns = ['suffix', "swp_suffix", 'label']#, 'classified_suffix']
+#    related_views = [SoftwareproductView,ClassifiedView]
 
 #class InteroperabilitystandardView(ModelView):
 #    datamodel = SQLAInterface(interoperabilitystandard)
@@ -85,6 +97,14 @@ appbuilder.add_view(
 appbuilder.add_view(
     CatalogueView,
     "Catalogue",
+    icon = "fa-folder-open-o",
+    category = "Software Product",
+    category_icon = "fa-envelope"
+)
+
+appbuilder.add_view(
+    CitationView,
+    "Citation",
     icon = "fa-folder-open-o",
     category = "Software Product",
     category_icon = "fa-envelope"
