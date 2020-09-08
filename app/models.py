@@ -38,6 +38,11 @@ associativeTables = list(map(lambda d: Table('swp_has_'+d[0], Base.metadata,
 #    Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix')),
 #)
 
+CitationHasClassified = Table("citation_has_classified",Model.metadata,
+    Column('citation_suffix', String(200), ForeignKey('citation.suffix'),primary_key=True),
+    Column('classified_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
+    )
+
 SwpHasChild = Table("swp_has_child",Model.metadata,
     Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True),
     Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
@@ -91,6 +96,7 @@ class Classified(Model):
     comment = Column(String, nullable=True)
     dct_source = Column(String(200), nullable=True)
     synonyms = Column(ARRAY(String(200)))
+    citation = relationship("Citation", secondary=CitationHasClassified)
 
     def __repr__(self):
         return self.label
@@ -99,8 +105,7 @@ class Citation(Model):
     suffix = Column(String(200), primary_key=True)
     swp_suffix = Column(String(200), ForeignKey("softwareproduct.suffix"),nullable=False)
     softwareproduct = relationship("Softwareproduct")
-    #classified_suffix = Column(String(200), ForeignKey("classified.suffix"))
-    #classified = relationship("Classified" )
+    classified = relationship("Classified", secondary=CitationHasClassified)
     label =  Column(String(200), nullable=False)
 
     def __repr__(self):
