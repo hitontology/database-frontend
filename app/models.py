@@ -13,6 +13,7 @@ associativeData = [
     ["programminglanguage","plang"],
     ["programminglibrary","lib"],
     ["interoperabilitystandard","io"],
+#    ["softwareproduct","child"],
     ]
 
 def repr(self):
@@ -32,14 +33,19 @@ associativeTables = list(map(lambda d: Table('swp_has_'+d[0], Base.metadata,
 	),
         associativeData))
 
-class SwpHasChild(Model):
-    parent_suffix = Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
-    child_suffix = Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
-#    def __repr__(self):
-#        return .label
+#assoc_child = Table("swp_has_child", Model.metadata,
+#    Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix')),
+#    Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix')),
+#)
+
+SwpHasChild = Table("swp_has_child",Model.metadata,
+    Column('parent_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True),
+    Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
+    )
 
 class Softwareproduct(Model):
     suffix = Column(String(200), primary_key=True)
+    #uri =  Column(String(229), nullable=False)
     label =  Column(String(200), nullable=False)
     comment = Column(String, nullable=True)
     coderepository = Column(String(200), nullable=True)
@@ -48,7 +54,15 @@ class Softwareproduct(Model):
     #databasesystems = Column(Enum("MySql","PostgreSql"))
 #    databasesystems =  Column(ArrayOfEnum(Enum("MySql","PostgreSql")))
 #    clients =  Column(ARRAY(Enum("Mobile","WebBased","Native")), nullable=False)
-    swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
+    #swp_has_child_= relationship("Softwareproduct", secondary=assoc_child, backref="softwareproduct", foreign_keys="swp_has_child.child_suffix")
+    #swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
+    #swp_has_child = relationship('SwpHasChild', foreign_keys="swphaschildsoftwareproduct.suffix")#  backref='softwareproduct',
+    parent = relationship("Softwareproduct", 
+    secondary=SwpHasChild,
+    foreign_keys = [SwpHasChild.c.parent_suffix,SwpHasChild.c.child_suffix],
+    primaryjoin=suffix==SwpHasChild.c.parent_suffix,
+    secondaryjoin=suffix==SwpHasChild.c.child_suffix,
+    backref="children")
 
     @validates('comment', 'coderepository', 'homepage')
     def empty_string_to_null(self, key, value):

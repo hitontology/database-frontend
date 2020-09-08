@@ -8,32 +8,37 @@ from .models import Softwareproduct, Catalogue, Classified, Citation#, interoper
 
 class SoftwareproductView(ModelView):
     datamodel = SQLAInterface(Softwareproduct)
-    edit_columns = ['suffix','label', 'comment', 'coderepository', 'homepage']
-    label_columns = {'label':'Name', 'comment':'Comment', "uri": "URI"}
-    list_columns = ['suffix',"uri", 'label', 'comment', 'coderepository', 'homepage']
+    #edit_columns = ['suffix','label', 'comment', 'coderepository', 'homepage']
+    #label_columns = {'label':'Name', 'comment':'Comment', "uri": "URI", 'suffix': 'ID'}
+    label_columns = {'label':'Name', 'comment':'Comment', 'suffix': 'ID'}
+    #list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix', 'uri']
+    list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix']
+    add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
 
 class ClassifiedView(ModelView):
     datamodel = SQLAInterface(Classified)
-    edit_columns= ["suffix","synonyms"]
+    edit_columns= ["suffix","catalogue","synonyms"]
     label_columns = {'label':'Name', }
-    list_columns = ['label', 'suffix', 'catalogue_suffix']
+    list_columns = ['label', 'suffix', 'catalogue']
     search_exclude_columns = ['synonyms']
-    add_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=0)}
-    edit_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=0)}
+    add_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=5)}
+    edit_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=5)}
 
 class CatalogueView(ModelView):
     datamodel = SQLAInterface(Catalogue)
     edit_columns= ["suffix"]
-    label_columns = {'label':'Name', }
+    label_columns = {'label':'Name', 'suffix': 'ID'}
     list_columns = ['suffix', 'label', 'type']
     related_views = [ClassifiedView]
 
 class CitationView(ModelView):
     datamodel = SQLAInterface(Citation)
-    edit_columns= ["suffix"]
-    label_columns = {'label':'Citation', 'suffix': 'id'}
-    list_columns = ['suffix', "swp_suffix", 'label']#, 'classified_suffix']
-#    related_views = [SoftwareproductView,ClassifiedView]
+    label_columns = {'label':'Citation', 'suffix': 'ID'}
+    add_columns = ['softwareproduct', "label", "suffix"]
+    edit_columns = ['softwareproduct', "label", "suffix"]
+    show_columns = ['softwareproduct', "label", "suffix"]
+    list_columns = ['softwareproduct', "label", "suffix"]
+    #related_views = [SoftwareproductView]
 
 #class InteroperabilitystandardView(ModelView):
 #    datamodel = SQLAInterface(interoperabilitystandard)
