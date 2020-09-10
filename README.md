@@ -18,6 +18,8 @@ Add the following to your `.ssh/config`:
     ControlPath ~/.ssh/sockets/%r@%h:%p
     User snik
 
+Create the directory `~/.ssh/sockets` if it doesn't exist.
+
 ### Open the Tunnel
 
     $ ssh -fN hitotunnel
