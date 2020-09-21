@@ -1,8 +1,10 @@
 from flask_appbuilder import Model, Base
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, Enum, ARRAY
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, ARRAY
 from sqlalchemy.orm import relationship, validates
 import config
+import enum
 from sqlalchemy import create_engine
+import sqlalchemy as sa
 
 engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
 
@@ -13,7 +15,8 @@ associativeData = [
     ["programminglanguage","plang"],
     ["programminglibrary","lib"],
     ["interoperabilitystandard","io"],
-#    ["softwareproduct","child"],
+    ["client","client"],
+    ["databasesystem","db"]
     ]
 
 def repr(self):
@@ -58,7 +61,6 @@ class Softwareproduct(Model):
     #databasesystems =  Column(ArrayOfEnum(Enum("MySql","PostgreSql")))
     #databasesystems = Column(Enum("MySql","PostgreSql"))
 #    databasesystems =  Column(ArrayOfEnum(Enum("MySql","PostgreSql")))
-#    clients =  Column(ARRAY(Enum("Mobile","WebBased","Native")), nullable=False)
     #swp_has_child_= relationship("Softwareproduct", secondary=assoc_child, backref="softwareproduct", foreign_keys="swp_has_child.child_suffix")
     #swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
     #swp_has_child = relationship('SwpHasChild', foreign_keys="swphaschildsoftwareproduct.suffix")#  backref='softwareproduct',
@@ -80,10 +82,17 @@ for i in range(len(associativeData)):
     rel = relationship(associativeData[i][0], secondary = associativeTables[i])
     setattr(Softwareproduct,"swp_has_"+associativeData[i][0],rel)
 
+class CatalogueType(enum.Enum):
+    UserGroup = "UserGroup"
+    ApplicationSystem = "ApplicationSystem"
+    Feature = "Feature"
+    EnterpriseFunction = "EnterpriseFunction"
+    OrganizationalUnit = "OrganizationalUnit"
+
 class Catalogue(Model):
     suffix = Column(String(200), primary_key=True)
     label =  Column(String(200), nullable=False)
-    type =  Column(Enum("UserGroup","ApplicationSystem","Feature","EnterpriseFunction","OrganizationalUnit"), nullable=False)
+    type = Column(sa.Enum(CatalogueType), nullable = False)
 
     def __repr__(self):
         return self.label
