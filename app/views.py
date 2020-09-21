@@ -28,7 +28,7 @@ class ClassifiedView(ModelView):
 
 class CatalogueView(ModelView):
     datamodel = SQLAInterface(Catalogue)
-    edit_columns= ["suffix"]
+    edit_columns= ["suffix","label","type"]
     label_columns = {'label':'Name', 'suffix': 'ID'}
     list_columns = ['suffix', 'label', 'type']
     related_views = [ClassifiedView]
