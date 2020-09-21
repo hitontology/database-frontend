@@ -116,6 +116,7 @@ class Citation(Model):
     softwareproduct = relationship("Softwareproduct")
     classified = relationship("Classified", secondary=CitationHasClassified)
     label =  Column(String(200), nullable=False)
+    type = Column(sa.Enum(CatalogueType), nullable = False)
 
     def __repr__(self):
         return self.label

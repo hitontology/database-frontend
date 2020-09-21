@@ -27,10 +27,10 @@ class CatalogueView(ModelView):
 class CitationView(ModelView):
     datamodel = SQLAInterface(Citation)
     label_columns = {'label':'Citation', 'suffix': 'ID'}
-    add_columns = ['softwareproduct', "label", "suffix", "classified"]
-    edit_columns = ['softwareproduct', "label", "suffix","classified"]
-    show_columns = ['softwareproduct', "label", "suffix","classified"]
-    list_columns = ['softwareproduct', "label", "suffix","classified"]
+    add_columns = ['softwareproduct', "label", "suffix", "classified","type"]
+    edit_columns = ['softwareproduct', "label", "suffix","classified","type"]
+    show_columns = ['softwareproduct', "label", "suffix","classified","type"]
+    list_columns = ['softwareproduct', "label", "suffix","classified","type"]
     related_views = [ClassifiedView]
 
 class SoftwareproductView(ModelView):
