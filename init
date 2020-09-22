@@ -9,4 +9,4 @@ pip install flask-appbuilder psycopg2
 deactivate
 . venv/bin/activate
 export FLASK_APP=app
-echo "HITO FAB initialized. If there is no user, run 'flask fab create-admin'"
+echo "HITO FAB initialized. If there is no user, run 'flask fab create-admin'. Run with 'flask run'."
