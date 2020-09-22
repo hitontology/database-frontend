@@ -8,11 +8,11 @@ from .models import Softwareproduct, Catalogue, Classified, Citation#, interoper
 
 class ClassifiedView(ModelView):
     datamodel = SQLAInterface(Classified)
-    edit_columns= ["suffix","catalogue","synonyms", "citation"]
     label_columns = {'label':'Name', }
-    list_columns = ['label', 'suffix', 'catalogue',"citation"]
-    show_columns = ['label','catalogue', "comment","dct_source","synonyms","citation"]
-    add_columns = ['label','catalogue', "comment","dct_source","synonyms","citation"]
+    list_columns= ["suffix","label", "comment", "dct_source", "catalogue", "synonyms", "citation","parents","children"]
+    show_columns= ["suffix","label", "comment", "dct_source", "catalogue", "synonyms", "citation","parents","children"]
+    edit_columns= ["suffix","label", "comment", "dct_source", "catalogue", "synonyms", "citation","parents","children"]
+    add_columns= ["suffix","label", "comment", "dct_source", "catalogue", "synonyms", "citation","parents","children"]
     search_exclude_columns = ['synonyms']
     add_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=5)}
     edit_form_extra_fields = {'synonyms': FieldList(StringField('Synonyms'), min_entries=5)}
@@ -39,9 +39,9 @@ class SoftwareproductView(ModelView):
     label_columns = {'label':'Name', 'comment':'Comment', 'suffix': 'ID', "swp_has_client": "Clients", "swp_has_databasesystem": "Databases"}
     #list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix', 'uri']
     list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix',"swp_has_client","swp_has_databasesystem"]
-    #show_columns = ['suffix','label','comment','coderepository','homepage','swp_has_client','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
-    #edit_columns = ['suffix','label','comment','coderepository','homepage', 'swp_has_client', 'swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
-    add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parent','children']
+    #show_columns = ['suffix','label','comment','coderepository','homepage','swp_has_client','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parents','children']
+    #edit_columns = ['suffix','label','comment','coderepository','homepage', 'swp_has_client', 'swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parents','children']
+    add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
     #add_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     #edit_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     related_views = [CitationView]

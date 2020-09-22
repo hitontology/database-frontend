@@ -51,6 +51,11 @@ SwpHasChild = Table("swp_has_child",Model.metadata,
     Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
     )
 
+ClassifiedHasChild = Table("classified_has_child",Model.metadata,
+    Column('parent_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True),
+    Column('child_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
+    )
+
 class Softwareproduct(Model):
     suffix = Column(String(200), primary_key=True)
     #uri =  Column(String(229), nullable=False)
@@ -64,7 +69,7 @@ class Softwareproduct(Model):
     #swp_has_child_= relationship("Softwareproduct", secondary=assoc_child, backref="softwareproduct", foreign_keys="swp_has_child.child_suffix")
     #swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
     #swp_has_child = relationship('SwpHasChild', foreign_keys="swphaschildsoftwareproduct.suffix")#  backref='softwareproduct',
-    parent = relationship("Softwareproduct", 
+    parents = relationship("Softwareproduct", 
     secondary=SwpHasChild,
     foreign_keys = [SwpHasChild.c.parent_suffix,SwpHasChild.c.child_suffix],
     primaryjoin=suffix==SwpHasChild.c.parent_suffix,
@@ -106,6 +111,20 @@ class Classified(Model):
     dct_source = Column(String(200), nullable=True)
     synonyms = Column(ARRAY(String(200)))
     citation = relationship("Citation", secondary=CitationHasClassified)
+    parents = relationship("Classified", 
+    secondary=ClassifiedHasChild,
+    foreign_keys = [ClassifiedHasChild.c.parent_suffix,ClassifiedHasChild.c.child_suffix],
+    primaryjoin=suffix==ClassifiedHasChild.c.parent_suffix,
+    secondaryjoin=suffix==ClassifiedHasChild.c.child_suffix,
+    backref="children")
+    
+    @validates('comment')
+    def empty_string_to_null(self, key, value):
+        return None if value=="" else value
+
+    @validates('synonyms')
+    def array_empty_string_to_null(self, key, values):
+        return list(filter(lambda value: value != "", values))
 
     def __repr__(self):
         return self.label
@@ -117,6 +136,10 @@ class Citation(Model):
     classified = relationship("Classified", secondary=CitationHasClassified)
     label =  Column(String(200), nullable=False)
     type = Column(sa.Enum(CatalogueType), nullable = False)
+
+    @validates('comment')
+    def empty_string_to_null(self, key, value):
+        return None if value=="" else value
 
     def __repr__(self):
         return self.label
