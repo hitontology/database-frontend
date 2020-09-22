@@ -36,12 +36,12 @@ class CitationView(ModelView):
 class SoftwareproductView(ModelView):
     datamodel = SQLAInterface(Softwareproduct)
     #label_columns = {'label':'Name', 'comment':'Comment', "uri": "URI", 'suffix': 'ID'}
-    label_columns = {'label':'Name', 'comment':'Comment', 'suffix': 'ID'}
+    label_columns = {'label':'Name', 'comment':'Comment', 'suffix': 'ID', "swp_has_client": "Clients", "swp_has_databasesystem": "Databases"}
     #list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix', 'uri']
-    list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix']
+    list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix',"swp_has_client","swp_has_databasesystem"]
     #show_columns = ['suffix','label','comment','coderepository','homepage','swp_has_client','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
     #edit_columns = ['suffix','label','comment','coderepository','homepage', 'swp_has_client', 'swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
-    #add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parent','children']
+    add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parent','children']
     #add_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     #edit_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     related_views = [CitationView]
