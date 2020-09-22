@@ -36,8 +36,7 @@ Run `source init` or the following commands:
     $ echo "PASSWORD = 'inserthitodatabasepasswordhere' > private.py"
     $ python -m venv venv
     $ . venv/bin/activate
-    (venv) $ pip install flask-appbuilder
-    (venv) $ pip install psycopg2
+    (venv) $ pip install -r requirements.txt
     (venv) $ deactivate
     $. venv/bin/activate
     (venv) $ export FLASK_APP=app
