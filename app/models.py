@@ -144,3 +144,14 @@ class Citation(Model):
     def __repr__(self):
         return self.label
 
+class FeatureSupportsFunction(Model):
+    feature_suffix = Column('feature_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
+    feature = relationship('Classified', foreign_keys=[feature_suffix])
+    function_suffix = Column('function_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
+    function = relationship('Classified', foreign_keys=[function_suffix])
+    source = Column(String(200), nullable=True)
+    
+    @validates('source')
+    def empty_string_to_null(self, key, value):
+        return None if value=="" else value
+    

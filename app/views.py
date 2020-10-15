@@ -4,7 +4,7 @@ from flask_appbuilder import ModelView, ModelRestApi
 from wtforms import StringField, FieldList
 
 from . import appbuilder, db
-from .models import Softwareproduct, Catalogue, Classified, Citation#, interoperabilitystandard
+from .models import Softwareproduct, Catalogue, Classified, Citation, FeatureSupportsFunction#, interoperabilitystandard
 
 class ClassifiedView(ModelView):
     datamodel = SQLAInterface(Classified)
@@ -31,6 +31,15 @@ class CitationView(ModelView):
     edit_columns = ['softwareproduct', "label", "suffix","classified","type"]
     show_columns = ['softwareproduct', "label", "suffix","classified","type"]
     list_columns = ['softwareproduct', "label", "suffix","classified","type"]
+    related_views = [ClassifiedView]
+
+class FeatureSupportsFunctionView(ModelView):
+    datamodel = SQLAInterface(FeatureSupportsFunction)
+    label_columns = {'feature':'Feature', 'function': 'Function'}
+    add_columns = ['feature', 'function', 'source']
+    edit_columns = ['feature', 'function', 'source']
+    show_columns = ['feature', 'function', 'source']
+    list_columns = ['feature', 'function', 'source']
     related_views = [ClassifiedView]
 
 class SoftwareproductView(ModelView):
@@ -126,6 +135,14 @@ appbuilder.add_view(
 appbuilder.add_view(
     ClassifiedView,
     "Classified",
+    icon = "fa-folder-open-o",
+    category = "Software Product",
+    category_icon = "fa-envelope"
+)
+
+appbuilder.add_view(
+    FeatureSupportsFunctionView,
+    "FeatureSupportsFunction",
     icon = "fa-folder-open-o",
     category = "Software Product",
     category_icon = "fa-envelope"
