@@ -1,5 +1,6 @@
 import os
 from warnings import warn
+from flask import send_from_directory
 
 from flask_appbuilder.security.manager import (
     AUTH_OID,
@@ -11,6 +12,12 @@ from flask_appbuilder.security.manager import (
 
 from app import app
 app.secret_key = os.urandom(14)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                              'favicon.ico',mimetype='image/vnd.microsoft.icon')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
