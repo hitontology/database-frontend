@@ -22,7 +22,7 @@ CSRF_ENABLED = True
 # APP_NAME = "My App Name"
 
 # Uncomment to setup Setup an App icon
-# APP_ICON = "static/img/logo.jpg"
+APP_ICON = "/static/img/hito.svg"
 
 # ----------------------------------------------------
 # AUTHENTICATION CONFIG
