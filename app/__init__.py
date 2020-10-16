@@ -8,7 +8,7 @@ from flask_appbuilder import AppBuilder, SQLA
 """
 
 logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
-logging.getLogger().setLevel(logging.DEBUG)
+logging.getLogger().setLevel(logging.WARN)
 
 app = Flask(__name__)
 app.config.from_object("config")
