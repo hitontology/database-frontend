@@ -1,5 +1,5 @@
 from flask_appbuilder import Model, Base
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, ARRAY
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, ARRAY, CheckConstraint
 from sqlalchemy.orm import relationship, validates
 import config
 import enum
@@ -145,6 +145,8 @@ class Citation(Model):
         return self.label
 
 class FeatureSupportsFunction(Model):
+    #feature_suffix = Column('feature_suffix', String(200), ForeignKey('classified_type.suffix'),CheckConstraint("type='Feature'"),primary_key=True)
+    #function_suffix = Column('function_suffix', String(200), ForeignKey('classified_type.suffix'),CheckConstraint("type='EnterpriseFunction'"),primary_key=True)
     feature_suffix = Column('feature_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
     feature = relationship('Classified', foreign_keys=[feature_suffix])
     function_suffix = Column('function_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
