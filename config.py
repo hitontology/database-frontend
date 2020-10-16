@@ -24,13 +24,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 try:
     HOST = os.environ['HITO_DATABASE_HOST']
 except:
-    warn('HITO_DATABASE_HOST environment variable not set, using localhost.')
+    warn('HITO_DATABASE_HOST environment variable not set, using localhost.',stacklevel=2)
     HOST = 'localhost'
 
 try:
     PORT = os.environ['HITO_DATABASE_PORT']
 except:
-    warn('HITO_DATABASE_PORT environment variable not set, using 5432.')
+    warn('HITO_DATABASE_PORT environment variable not set, using 5432.',stacklevel=2)
     PORT = '5432'
 
 try:
