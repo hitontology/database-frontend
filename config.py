@@ -1,5 +1,6 @@
 import os
-from private import PASSWORD, SECRET_KEY
+from warnings import warn
+
 from flask_appbuilder.security.manager import (
     AUTH_OID,
     AUTH_REMOTE_USER,
@@ -8,9 +9,30 @@ from flask_appbuilder.security.manager import (
     AUTH_OAUTH,
 )
 
+from app import app
+app.secret_key = os.urandom(14)
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:'+PASSWORD+'@localhost/hito'
+try:
+    HOST = os.environ['HITO_DATABASE_HOST']
+except:
+    warn('HITO_DATABASE_HOST environment variable not set, using localhost.')
+    HOST = 'localhost'
+
+try:
+    PORT = os.environ['HITO_DATABASE_PORT']
+except:
+    warn('HITO_DATABASE_PORT environment variable not set, using 5432.')
+    PORT = '5432'
+
+try:
+    PASSWORD = os.environ['HITO_DATABASE_PASSWORD']
+except:
+    raise Exception('HITO_DATABASE_PASSWORD environment variable not set. Aborting.')
+    PORT = '5432'
+
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:'+PASSWORD+'@'+HOST+':'+PORT+'/hito'
 
 # Flask-WTF flag for CSRF
 CSRF_ENABLED = True
