@@ -40,6 +40,10 @@ Run `source init` or the following commands:
     (venv) $ deactivate
     $. venv/bin/activate
     (venv) $ export FLASK_APP=app
+    (venv) $ export HITO_DATABASE_HOST=myhost       # defaults to localhost
+    (venv) $ export HITO_DATABASE_PORT=myport       # defaults to 5432
+    (venv) $ export HITO_DATABASE_PASSWORD=insertpasswordhere
+
     (venv) $ flask fab create-admin
 
 ## Run
