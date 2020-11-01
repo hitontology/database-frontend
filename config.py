@@ -22,6 +22,13 @@ def favicon():
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 try:
+    SERVER_NAME = os.environ['HITO_DATABASE_FRONTEND_SERVER_NAME']
+    app.config['SERVER_NAME'] = SERVER_NAME
+    print('Setting server name to '+SERVER_NAME+'.')
+except:
+    pass
+
+try:
     HOST = os.environ['HITO_DATABASE_HOST']
 except:
     warn('HITO_DATABASE_HOST environment variable not set, using localhost.',stacklevel=2)
