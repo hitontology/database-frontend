@@ -49,3 +49,7 @@ Run `source init` or the following commands:
 ## Run
     $ . venv/bin/activate
     (venv) $ flask run
+
+## Deployment
+Currently deployed on the "bruchtal" server.
+See <https://wiki.imise.uni-leipzig.de/Projekte/IFB/IT/Serverbuch/Bruchtal>.
