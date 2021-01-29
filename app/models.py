@@ -127,7 +127,7 @@ class Classified(Model):
         return list(filter(lambda value: value != "", values))
 
     def __repr__(self):
-        return self.label
+        return self.label + " (" + self.catalogue_suffix + ")"
 
 class Citation(Model):
     suffix = Column(String(200), primary_key=True)
