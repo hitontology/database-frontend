@@ -147,10 +147,10 @@ class Citation(Model):
 class FeatureSupportsFunction(Model):
     #feature_suffix = Column('feature_suffix', String(200), ForeignKey('classified_type.suffix'),CheckConstraint("type='Feature'"),primary_key=True)
     #function_suffix = Column('function_suffix', String(200), ForeignKey('classified_type.suffix'),CheckConstraint("type='EnterpriseFunction'"),primary_key=True)
-    feature_suffix = Column('feature_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
-    feature = relationship('Classified', foreign_keys=[feature_suffix])
-    function_suffix = Column('function_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
-    function = relationship('Classified', foreign_keys=[function_suffix])
+    feature_suffix = Column('feature_suffix', String(200), ForeignKey('citation.suffix'),primary_key=True)
+    feature = relationship('Citation', foreign_keys=[feature_suffix])
+    function_suffix = Column('function_suffix', String(200), ForeignKey('citation.suffix'),primary_key=True)
+    function = relationship('Citation', foreign_keys=[function_suffix])
     source = Column(String(200), nullable=True)
     
     @validates('source')
