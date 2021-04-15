@@ -51,6 +51,11 @@ SwpHasChild = Table("swp_has_child",Model.metadata,
     Column('child_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True)
     )
 
+SwpHasClassified = Table("swp_has_classified",Model.metadata,
+    Column('swp_suffix', String(200), ForeignKey('softwareproduct.suffix'),primary_key=True),
+    Column('classified_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
+    )
+
 ClassifiedHasChild = Table("classified_has_child",Model.metadata,
     Column('parent_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True),
     Column('child_suffix', String(200), ForeignKey('classified.suffix'),primary_key=True)
@@ -69,6 +74,7 @@ class Softwareproduct(Model):
     #swp_has_child_= relationship("Softwareproduct", secondary=assoc_child, backref="softwareproduct", foreign_keys="swp_has_child.child_suffix")
     #swp_has_child = relationship('SwpHasChild', backref='softwareproduct', foreign_keys="SwpHasChild.child_suffix")
     #swp_has_child = relationship('SwpHasChild', foreign_keys="swphaschildsoftwareproduct.suffix")#  backref='softwareproduct',
+    classified = relationship("Classified", secondary=SwpHasClassified)
     parents = relationship("Softwareproduct", 
     secondary=SwpHasChild,
     foreign_keys = [SwpHasChild.c.parent_suffix,SwpHasChild.c.child_suffix],

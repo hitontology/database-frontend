@@ -47,11 +47,11 @@ class SoftwareproductView(ModelView):
     #label_columns = {'label':'Name', 'comment':'Comment', "uri": "URI", 'suffix': 'ID'}
     label_columns = {'label':'Name', 'comment':'Comment', 'suffix': 'ID', "swp_has_client": "Clients", "swp_has_databasesystem": "Databases"}
     #list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix', 'uri']
-    list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix',"swp_has_client","swp_has_databasesystem"]
+    list_columns = ['label', 'comment', 'coderepository', 'homepage', 'suffix','swp_has_client',"swp_has_databasesystem"]
     #show_columns = ['suffix','label','comment','coderepository','homepage','swp_has_client','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'parents','children']
-    edit_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
-    add_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
-    show_columns = ['suffix','label','comment','coderepository','homepage','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
+    edit_columns = ['suffix','label','comment','coderepository','homepage','classified','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
+    add_columns = ['suffix','label','comment','coderepository','homepage','classified','swp_has_language','swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
+    show_columns = ['suffix','label','comment','coderepository','homepage','classified','swp_has_language', 'swp_has_license','swp_has_operatingsystem', 'swp_has_programminglanguage', 'swp_has_interoperabilitystandard', 'swp_has_client', 'swp_has_databasesystem', 'parents','children']
     #add_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     #edit_form_extra_fields = {'swp_has_client': FieldList(EnumField('Client'), min_entries=5)}
     related_views = [CitationView]
