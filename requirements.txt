@@ -1,2 +1,3 @@
+wheel
 flask-appbuilder
-psycopg2
+psycopg2-binary

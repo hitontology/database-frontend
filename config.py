@@ -44,9 +44,14 @@ try:
     PASSWORD = os.environ['HITO_DATABASE_PASSWORD']
 except:
     raise Exception('HITO_DATABASE_PASSWORD environment variable not set. Aborting.')
-    PORT = '5432'
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:'+PASSWORD+'@'+HOST+':'+PORT+'/hito'
+try:
+    NAME = os.environ['HITO_DATABASE_NAME']
+except:
+    warn('HITO_DATABASE_NAME environment variable not set using hito.')
+    NAME = 'hito'
+
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:'+PASSWORD+'@'+HOST+':'+PORT+'/'+NAME
 
 # Flask-WTF flag for CSRF
 CSRF_ENABLED = True
