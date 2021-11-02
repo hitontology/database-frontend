@@ -1,0 +1,8 @@
+.gitignore
+.env
+private.py
+venv
+admin
+*.db
+*.odb
+
