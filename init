@@ -1,3 +1,4 @@
+# For local testing
 echo "Please enter the database password"
 read -s password
 echo "HITO_DATABASE_PASSWORD = '$password'" > private.py
