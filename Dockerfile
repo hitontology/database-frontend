@@ -5,9 +5,9 @@ LABEL maintainer "Sebastian Stäubert (sebastian.staeubert@imise.uni-leipzig.de)
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt /tmp
-RUN pip install -r /tmp/requirements.txt --disable-pip-version-check --no-cache-dir \
- && rm /tmp/requirements.txt
+COPY requirements.freeze.txt /tmp
+RUN pip install -r /tmp/requirements.freeze.txt --disable-pip-version-check --no-cache-dir \
+ && rm /tmp/requirements.freeze.txt
 RUN secretKey=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1) \
  && echo "SECRET_KEY='$secretKey'" >> private.py
 
