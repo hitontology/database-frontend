@@ -95,7 +95,7 @@ for i in range(len(associativeData)):
 
 class CatalogueType(enum.Enum):
     UserGroup = "UserGroup"
-    ApplicationSystem = "ApplicationSystem"
+    ApplicationSystemType = "ApplicationSystemType"
     Feature = "Feature"
     EnterpriseFunction = "EnterpriseFunction"
     OrganizationalUnit = "OrganizationalUnit"
