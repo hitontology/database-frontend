@@ -1,9 +1,6 @@
 wheel
-flask-appbuilder
+flask-appbuilder<4
+markupsafe<2.1
 psycopg2-binary
-# Workaround to error with wtforms 3.0.0, fixed in https://github.com/dpgaspar/Flask-AppBuilder/pull/1733 but not released yet as of 2021-11-9
 wtforms<3
-
 flask-reverse-proxy-fix
-werkzeug<1
-
