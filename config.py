@@ -1,5 +1,5 @@
 import os
-from warnings import warn
+from logging import warning
 from flask import send_from_directory
 
 from flask_appbuilder.security.manager import (
@@ -31,13 +31,13 @@ except:
 try:
     HOST = os.environ['HITO_DATABASE_HOST']
 except:
-    warn('HITO_DATABASE_HOST environment variable not set, using localhost.',stacklevel=2)
+    warning('HITO_DATABASE_HOST environment variable not set, using localhost.',stacklevel=2)
     HOST = 'localhost'
 
 try:
     PORT = os.environ['HITO_DATABASE_PORT']
 except:
-    warn('HITO_DATABASE_PORT environment variable not set, using 5432.',stacklevel=2)
+    warning('HITO_DATABASE_PORT environment variable not set, using 5432.',stacklevel=2)
     PORT = '5432'
 
 try:
@@ -48,7 +48,7 @@ except:
 try:
     NAME = os.environ['HITO_DATABASE_NAME']
 except:
-    warn('HITO_DATABASE_NAME environment variable not set using hito.')
+    warning('HITO_DATABASE_NAME environment variable not set using hito.')
     NAME = 'hito'
 
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:'+PASSWORD+'@'+HOST+':'+PORT+'/'+NAME

@@ -1,5 +1,5 @@
 import logging
-from warnings import warn
+from logging import warning
 import os
 from flask import Flask
 from flask_appbuilder import AppBuilder, SQLA
@@ -20,7 +20,7 @@ try:
     ReverseProxyPrefixFix(app)
     print('HITO_DATABASE_FRONTEND_REVERSE_PROXY_PATH='+REVERSE_PROXY_PATH)
 except:
-    warn('HITO_DATABASE_FRONTEND_REVERSE_PROXY_PATH environment variable not set. This installation may not work when served under a folder.')
+    warning('HITO_DATABASE_FRONTEND_REVERSE_PROXY_PATH not set, may not work when served under a folder.')
 
 #######################################################
 app.config.from_object("config")
