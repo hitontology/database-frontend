@@ -1,4 +1,6 @@
 # HITO Database Frontend
+
+[![build](https://github.com/hitontology/database-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/hitontology/database-frontend/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Create, read, update and delete (CRUD) tool for HITO software products and citations.
