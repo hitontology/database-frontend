@@ -6,7 +6,7 @@ secretKey=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 echo "SECRET_KEY = '$secretKey'" >> private.py
 python -m venv venv
 . venv/bin/activate
-pip install flask-appbuilder psycopg2
+pip install -r requirements.freeze.txt
 deactivate
 . venv/bin/activate
 export FLASK_APP=app

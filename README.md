@@ -31,7 +31,7 @@ If you need to free the port or you want to reopen the tunnel, close the tunnel:
 
 ##  Setup
 
-Run `source init` or the following commands: 
+Run `. init.sh` or the following commands: 
 
     $ echo "PASSWORD = 'inserthitodatabasepasswordhere' > private.py"
     $ python -m venv venv
