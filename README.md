@@ -1,33 +1,21 @@
 # HITO Database Frontend
+Create, read, update and delete (CRUD) tool for HITO software products and citations.
 
-## Database
+## Usage
 
-Requires an IMISE account and your SSH public key registered with both the star and the bruchtal server.
+The source of truth of HITO is the [ontology repository](https://github.com/hitontology/ontology), which is regularily mirrored in the [HITO SPARQL endpoint](https://hitontology.eu/sparql).
+This frontend is the only Docker container in our setup that preserves state, so tell [@KonradHoeffner](https://github.com/konradhoeffner/) when you want to use it so he will not rebuild the docker containers and volumes during that time and performs a [semi-automatic merge into the ontology repository](https://github.com/hitontology/database/#export) afterwards.
+**Otherwise, all your changes will be lost!**
 
-Add the following to your `.ssh/config`:
-
-    Host star
-    Hostname star.imise.uni-leipzig.de
-    User myusername
-
-    Host hitotunnel                                                                                                                                               
-    Hostname 139.18.158.56
-    ProxyJump  star
-    LocalForward 5432 localhost:5433
-    ControlMaster auto
-    ControlPath ~/.ssh/sockets/%r@%h:%p
-    User snik
-
-Create the directory `~/.ssh/sockets` if it doesn't exist.
-
-### Open the Tunnel
-
-    $ ssh -fN hitotunnel
-
-### Close the Tunnel
-If you need to free the port or you want to reopen the tunnel, close the tunnel:
-
-    $ ssh -S ~/.ssh/sockets/snik@139.18.158.56:22 -O exit hitotunnel
+## History
+Generic RDF CRUD tools were not well suited to HITO software product data entry by domain experts without expert Semantic Web knowledge.
+Thus, the relevant parts of HITO were transformed in 2020 into a [relational database](https://github.com/hitontology/database).
+The assumption was that the relational database (in the following just "database") field would offer mature out-of-the-box generic CRUD tools.
+However database experts told us that this is still an open problem so the next best step was the use of the simple and rapid CRUD application development framework [Flask-AppBuilder](https://flask-appbuilder.readthedocs.io/en/latest/).
+If you know how to edit RDF Turtle files and don't need the features of the frontend, you can [edit the files directly](https://github.com/hitontology/ontology/), so that a merge is not necessary.
+It is unclear whether the frontend will be used after the project end in July 2022.
+Nowadays it is only developed and used as part of the [HITO Docker container infrastructure](https://github.com/hitontology/docker).
+If you want to develop it without docker and the database is already running at myhost:myport, follow the old documentation below.
 
 ##  Setup
 
@@ -49,7 +37,3 @@ Run `. init.sh` or the following commands:
 ## Run
     $ . venv/bin/activate
     (venv) $ flask run
-
-## Deployment
-Currently deployed on the "bruchtal" server.
-See <https://wiki.imise.uni-leipzig.de/Projekte/IFB/IT/Serverbuch/Bruchtal>.
