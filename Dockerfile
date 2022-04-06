@@ -1,7 +1,7 @@
 # Alpine doesn't work well with psycopg2
 FROM python:slim
 
-LABEL maintainer "Sebastian Stäubert (sebastian.staeubert@imise.uni-leipzig.de), Konrad Höffner (konrad.hoeffner@imise.uni-leipzig.de)"
+LABEL maintainer "Konrad Höffner (konrad.hoeffner@imise.uni-leipzig.de)"
 
 WORKDIR /usr/src/app
 

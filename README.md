@@ -1,4 +1,6 @@
 # HITO Database Frontend
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 Create, read, update and delete (CRUD) tool for HITO software products and citations.
 
 ## Usage
