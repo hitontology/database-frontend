@@ -1,3 +1,6 @@
+## :warning: **The HITO Database Frontend is neither used nor maintained anymore**
+This repository has been archived on 2022-05-16.
+
 # HITO Database Frontend
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
