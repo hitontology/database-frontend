@@ -99,6 +99,7 @@ class CatalogueType(enum.Enum):
     Feature = "Feature"
     EnterpriseFunction = "EnterpriseFunction"
     OrganizationalUnit = "OrganizationalUnit"
+    OutcomeCriteria = "OutcomeCriteria"
 
 class Catalogue(Model):
     suffix = Column(String(200), primary_key=True)
