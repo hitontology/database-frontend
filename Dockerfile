@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Alpine doesn't work well with psycopg2
 FROM python:slim
 
